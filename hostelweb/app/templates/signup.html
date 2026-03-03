@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">	<title>signup</title>
+</head>
+<body>
+
+
+<div id="container-all">
+<form method="post">
+	{% csrf_token %}
+	<div id="form-input-btn-div">
+		<input type="text" name="username" id="username" placeholder="username"><br>
+
+
+		<input type="password" name="password" id="password" placeholder="Password"><br>
+		<button>Sign Up</button>
+		<span>or</span>
+	<a href="{% url 'loginpage' %}">login</a>
+	</div>
+</form>
+</div>
+
+
+
+
+
+</body>
+
+
+
+
+<style>
+	
+
+/* Base reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
+}
+
+/* Background */
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #eef2f7, #f9fbfd);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Outer container */
+#container-all {
+    width: 100%;
+    padding: 18px;
+}
+
+/* Form card */
+#form-input-btn-div {
+    background: #ffffff;
+    max-width: 380px;
+    margin: auto;
+    padding: 32px 26px;
+    border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* Inputs */
+#form-input-btn-div input {
+    width: 100%;
+    padding: 13px 14px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 15px;
+    background: #f9fafb;
+    transition: all 0.25s ease;
+}
+
+/* Input focus */
+#form-input-btn-div input:focus {
+    outline: none;
+    background: #ffffff;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* Button */
+#form-input-btn-div button {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Button hover */
+#form-input-btn-div button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+}
+
+/* OR text */
+#form-input-btn-div span {
+    display: block;
+    text-align: center;
+    margin: 16px 0 10px;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* Login link */
+#form-input-btn-div a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2563eb;
+}
+
+/* Link hover */
+#form-input-btn-div a:hover {
+    text-decoration: underline;
+}
+
+/* Small screen optimization */
+@media (max-width: 360px) {
+    #form-input-btn-div {
+        padding: 26px 20px;
+    }
+}
+
+
+
+
+
+
+</style>
+
+
+
+
+</html>

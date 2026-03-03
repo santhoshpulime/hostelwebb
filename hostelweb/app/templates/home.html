@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>home</title>
+</head>
+<body>
+<p id="username">{{request.user}}</p>
+<div id="all_container">
+
+
+
+	<div id="students_container">
+
+	 <a href="studentspage"> <p>students</p></a> 
+		
+	</div>
+	
+	<div id="accounts_container">
+		<a href="{% url 'accounts' %}"><p>accounts</p></a> 
+	</div>
+
+<br><br>
+	<div id="add_btn_container">
+
+		<button><a href="add_room_beds">Add Room&Bed</a></button>
+		
+		<button><a href="add_student">Add Student</a></button>
+        <button> <a href="{% url 'logout' %}">Logout</a> </button>
+	
+	</div>
+
+
+</div>
+
+
+
+</body>
+
+
+
+
+
+<style>
+	
+/* ========= Base Reset ========= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
+}
+
+/* ========= Background ========= */
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f1f5f9, #e5eaf1);
+    padding: 16px;
+    color: #0f172a;
+}
+
+/* ========= Username ========= */
+#username {
+    font-size: 15px;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 22px;
+    padding-left: 4px;
+}
+
+/* ========= Main Grid ========= */
+#all_container {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+/* ========= Dashboard Cards ========= */
+#rooms_container,
+#students_container,
+#accounts_container {
+    background: #ffffff;
+    padding: 28px 22px;
+    border-radius: 16px;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+    transition: all 0.25s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Soft top glow */
+#rooms_container::before,
+#students_container::before,
+#accounts_container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+}
+
+/* Accent colors */
+#rooms_container::before {
+    background: linear-gradient(90deg, #2563eb, #60a5fa);
+}
+
+#students_container::before {
+    background: linear-gradient(90deg, #10b981, #6ee7b7);
+}
+
+#accounts_container::before {
+    background: linear-gradient(90deg, #f59e0b, #fde68a);
+}
+
+/* Hover animation */
+#rooms_container:hover,
+#students_container:hover,
+#accounts_container:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+}
+
+/* Card text */
+#rooms_container p,
+#students_container p,
+#accounts_container p {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1e293b;
+}
+/* Remove blue tap highlight on mobile */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ===== Logged-in Username ===== */
+#username {
+    display: inline-block;
+    background: #ffffff;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2563eb;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    margin-bottom: 20px;
+    font-size: 30px;
+    text-align: center;
+}
+
+
+/* ========= Mobile Optimisation ========= */
+@media (max-width: 480px) {
+    body {
+        padding: 14px;
+    }
+
+    #username {
+        font-size: 14px;
+    }
+
+    #rooms_container,
+    #students_container,
+    #accounts_container {
+        padding: 24px 18px;
+        border-radius: 14px;
+    }
+}
+
+
+
+/* add btns container */
+/* ========= Action Buttons Container ========= */
+#add_btn_container {
+    grid-column: 1 / -1;              /* Full width below cards */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+}
+
+/* ========= Action Buttons ========= */
+#add_btn_container button {
+    padding: 12px 14px;
+    border: none;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #1e293b;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease;
+}
+
+/* Hover / Tap effect */
+#add_btn_container button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* Tap animation (mobile feel) */
+#add_btn_container button:active {
+    transform: scale(0.97);
+}
+
+/* Optional accent colors */
+#add_btn_container button:nth-child(1) {
+    border-left: 4px solid #10b981;   /* Add Student */
+}
+
+#add_btn_container button:nth-child(2) {
+    border-left: 4px solid #2563eb;   /* Add Payment */
+}
+
+#add_btn_container button:nth-child(3) {
+    border-left: 4px solid #f59e0b;   /* Add Bed */
+}
+
+#add_btn_container button:nth-child(4) {
+    border-left: 4px solid #8b5cf6;   /* Add Room */
+}
+
+/* ========= Mobile Optimization ========= */
+@media (max-width: 480px) {
+    #add_btn_container {
+        gap: 10px;
+    }
+
+    #add_btn_container button {
+        font-size: 13px;
+        padding: 11px 12px;
+        border-radius: 10px;
+    }
+}
+a{
+	text-decoration: none;
+	color: black;
+}
+
+</style>
+</html>

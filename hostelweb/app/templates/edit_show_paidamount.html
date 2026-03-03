@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        /* Fee Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th {
+            background: #007bff;
+            color: white;
+            padding: 10px;
+        }
+
+        table td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary {
+            margin-top: 15px;
+            font-size: 16px;
+        }
+
+        .total { color: green; }
+        .remaining { color: red; }
+
+        /* Form Styling */
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            border: none;
+            background: #28a745;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+
+        /* Bed Section */
+        .bed-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 10px;
+        }
+
+        .bed-item {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #ddd;
+        }
+
+        .bed-item button {
+            background: #007bff;
+            padding: 5px 10px;
+        }
+
+        .bed-item button:hover {
+            background: #0056b3;
+        }
+        
+        /* 🔻 Premium Glass Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 520px;
+    height: 70px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 05px;
+
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    z-index: 1000;
+    position: fixed;
+}
+
+/* Nav Items */
+.nav-item {
+    position: relative;
+    text-decoration: none;
+    color: #111;
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 0.3s ease;
+    z-index: 2;
+}
+
+/* Icons */
+.nav-item i {
+    font-size: 20px;
+    margin-bottom: 4px;
+    transition: 0.3s ease;
+}
+
+/* Hover */
+.nav-item:hover {
+    opacity: 0.6;
+}
+
+/* Active Style */
+.nav-item.active {
+    color: #000;
+}
+
+/* Animated Indicator */
+.nav-indicator {
+    position: absolute;
+    height: 45px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 20px;
+    transition: 0.4s ease;
+    left: 25%;
+    transform: translateX(-50%);
+}
+
+/* Prevent content hiding */
+.container {
+    padding-bottom: 120px;
+}
+
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- 🔻 Premium Glass Bottom Navigation -->
+<div class="bottom-nav">
+    <div class="nav-indicator"></div>
+
+    <a href="{% url 'home' %}" class="nav-item active">
+        <i class="fa fa-home"></i>
+        <span>Home</span>
+    </a>
+
+    <a href="{% url 'studentspage' %}" class="nav-item">
+        <i class="fa fa-users"></i>
+        <span>Students</span>
+    </a>
+</div>
+
+
+    <!-- ================== FEE SECTION ================== -->
+    <div class="card">
+        <h2>Payment History</h2>
+
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Amount Paid</th>
+            </tr>
+
+            {% for i in payment_history %}
+            <tr>
+                <td>{{ i.amountpaid_date }}</td>
+                <td>₹ {{ i.amount_paid }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">No Payments Yet</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <div class="summary">
+            <input type="hidden" id="total_paid" value="{{total_paid}}">
+            <input type="hidden" id="advance_amount" value="{{student.advance_amount}}">
+
+            <p class="total"><strong>Total Paid:</strong> ₹ {{ total_paid }}+advance({{student.advance_amount}})</p><span id="show_total">{{total_fee_paid}}</span>
+            <p class="remaining"><strong>Remaining Amount:</strong> ₹ {{ remaning_amount }}</p>
+        </div>
+    </div>
+
+    <!-- ================== UPDATE SECTION ================== -->
+    <div class="card">
+        <h2>Update Student Details</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label>Name</label>
+            <input type="text" name="student_name" value="{{ student.student_name }}">
+
+            <label>Parent Name</label>
+            <input type="text" name="parent_name" value="{{ student.parent_name }}">
+
+            <label>Student Phone</label>
+            <input type="text" name="student_phn_number" value="{{ student.student_phn_number }}">
+
+            <label>Parent Phone</label>
+            <input type="text" name="parent_phn_number" value="{{ student.parent_phn_number }}">
+
+            <label>Address</label>
+            <textarea name="address">{{ student.address }}</textarea>
+
+            <input type="text" id="room_bed" name="room_bed" value="{{ student.room_bed }}">
+
+            <label>Total Fee</label>
+            <input type="text" name="total_fee" value="{{ student.total_fee }}">
+
+            <button type="submit">Update Student</button>
+        </form>
+    </div>
+
+    <!-- ================== BED SECTION ================== -->
+    <div class="card">
+        <h2>Select Room & Bed</h2>
+
+        <div class="bed-grid">
+            {% for i in bed_show %}
+                <div class="bed-item">
+                    <span>Room {{i.room.room_number}} – Bed {{i.bed_number}}</span>
+                    <button type="button" onclick="add_room_bed('{{i.id}}')">
+                        Add
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function add_room_bed(room_id) {
+        document.getElementById("room_bed").value = room_id;
+        alert("Bed Selected");
+    }
+   const advance_amount=document.getElementById("advance_amount");
+    const total_paid = document.getElementById("total_paid");
+    let advance_amount_int = parseInt(advance_amount) || 0;
+    let total_paid_int = parseInt(total_paid)||0;
+    const total = advance_amount_int+total_paid_int;
+    console.log(total)
+    document.getElementById("show_total_p").innerText=total;
+</script>
+
+</body>
+</html>

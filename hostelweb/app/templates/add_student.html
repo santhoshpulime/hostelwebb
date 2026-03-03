@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Add Student</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<style>
+		/* ===== General ===== */
+		body {
+			font-family: "Segoe UI", Tahoma, sans-serif;
+			background: #f4f6f9;
+			margin: 0;
+			padding: 40px;
+		}
+
+		.container {
+			max-width: 900px;
+			margin: auto;
+			background: #ffffff;
+			padding: 30px;
+			border-radius: 10px;
+			box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+		}
+
+		h1 {
+			text-align: center;
+			margin-bottom: 25px;
+			color: #333;
+		}
+
+		/* ===== Form ===== */
+		form {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 15px;
+			margin-bottom: 30px;
+		}
+
+		form input {
+			padding: 12px;
+			border-radius: 6px;
+			border: 1px solid #ccc;
+			font-size: 15px;
+			transition: 0.2s;
+		}
+
+		form input:focus {
+			outline: none;
+			border-color: #4f46e5;
+			box-shadow: 0 0 0 2px rgba(79,70,229,0.15);
+		}
+
+		#student_room_id {
+			background: #f1f5f9;
+			cursor: not-allowed;
+		}
+
+		#add_student_btn {
+			grid-column: span 2;
+			padding: 14px;
+			font-size: 16px;
+			background: #4f46e5;
+			color: white;
+			border: none;
+			border-radius: 8px;
+			cursor: pointer;
+			transition: 0.3s;
+		}
+
+		#add_student_btn:hover {
+			background: #4338ca;
+		}
+
+		/* ===== Bed List ===== */
+		.bed-section {
+			border-top: 1px solid #e5e7eb;
+			padding-top: 20px;
+		}
+
+		.bed-item {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			background: #f9fafb;
+			padding: 12px 15px;
+			border-radius: 6px;
+			margin-bottom: 10px;
+		}
+
+		.bed-item span {
+			font-weight: 500;
+			color: #374151;
+		}
+
+		.bed-item button {
+			background: #22c55e;
+			border: none;
+			color: white;
+			padding: 8px 12px;
+			border-radius: 6px;
+			cursor: pointer;
+			transition: 0.2s;
+		}
+
+		.bed-item button:hover {
+			background: #16a34a;
+		}
+
+		/* ===== Responsive ===== */
+		@media (max-width: 700px) {
+			form {
+				grid-template-columns: 1fr;
+			}
+
+			#add_student_btn {
+				grid-column: span 1;
+			}
+		}
+		/* ===== Mobile View ===== */
+@media (max-width: 600px) {
+
+	body {
+		padding: 15px;
+	}
+
+	.container {
+		padding: 20px 15px;
+		border-radius: 8px;
+	}
+
+	h1 {
+		font-size: 22px;
+		margin-bottom: 20px;
+	}
+
+	/* Form becomes single column */
+	form {
+		grid-template-columns: 1fr;
+		gap: 12px;
+	}
+
+	form input {
+		font-size: 14px;
+		padding: 12px;
+	}
+
+	#add_student_btn {
+		font-size: 15px;
+		padding: 13px;
+		border-radius: 6px;
+	}
+
+	/* Bed Section */
+	.bed-section h3 {
+		font-size: 18px;
+		margin-bottom: 12px;
+	}
+
+	.bed-item {
+		padding: 10px 12px;
+		border-radius: 6px;
+	}
+
+	.bed-item span {
+		font-size: 14px;
+	}
+
+	.bed-item button {
+		padding: 8px 10px;
+		font-size: 14px;
+		border-radius: 5px;
+	}
+
+	/* Touch friendly */
+	button, input {
+		min-height: 44px;
+	}
+
+}
+/* 🔻 Premium Glass Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 520px;
+    height: 70px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 05px;
+
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    z-index: 1000;
+    position: fixed;
+}
+
+/* Nav Items */
+.nav-item {
+    position: relative;
+    text-decoration: none;
+    color: #111;
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 0.3s ease;
+    z-index: 2;
+}
+
+/* Icons */
+.nav-item i {
+    font-size: 20px;
+    margin-bottom: 4px;
+    transition: 0.3s ease;
+}
+
+/* Hover */
+.nav-item:hover {
+    opacity: 0.6;
+}
+
+/* Active Style */
+.nav-item.active {
+    color: #000;
+}
+
+/* Animated Indicator */
+.nav-indicator {
+    position: absolute;
+    height: 45px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 20px;
+    transition: 0.4s ease;
+    left: 25%;
+    transform: translateX(-50%);
+}
+
+/* Prevent content hiding */
+.container {
+    padding-bottom: 120px;
+}
+
+	</style>
+</head>
+
+<body>
+
+
+<!-- 🔻 Premium Glass Bottom Navigation -->
+<div class="bottom-nav">
+    <div class="nav-indicator"></div>
+
+    <a href="{% url 'home' %}" class="nav-item active">
+        <i class="fa fa-home"></i>
+        <span>Home</span>
+    </a>
+
+    <a href="{% url 'studentspage' %}" class="nav-item">
+        <i class="fa fa-users"></i>
+        <span>Students</span>
+    </a>
+</div>
+
+
+<div class="container">
+	<h1>Add Student Details</h1>
+
+	<form method="POST">
+		{% csrf_token %}
+		<input type="text" name="sudent_name" placeholder="Student Name">
+		<input type="text" name="parent_name" placeholder="Parent Name">
+		<input type="text" name="address" placeholder="Address">
+		<input type="text" name="student_phn_number" placeholder="Student Phone Number">
+		<input type="text" name="parent_phn_number" placeholder="Parent Phone Number">
+		<input type="hidden" name="student_room_id" id="student_room_id" placeholder="Selected Bed ID">
+		<input type="text" name="advance_amount" id="advance_amount" placeholder="Advance-amount">
+		<input type="text" name="total_fee" id="total_fee" placeholder="Total Fee">
+
+		<button id="add_student_btn" onclick="alert_show_when_data_added()">Add Student</button>
+	</form>
+
+	<div class="bed-section">
+		<h3>Select Room & Bed</h3>
+		{% for i in bed_show %}
+			<div class="bed-item">
+				<span>Room {{i.room.room_number}} – Bed {{i.bed_number}}</span>
+				<button onclick="add_room_bed('{{i.id}}')" id="add_room_btn">
+					<i class="fa fa-plus"></i>
+				</button>
+			</div>
+		{% endfor %}
+	</div>
+</div>
+
+<script>
+	function add_room_bed(room_id) {
+		document.getElementById("student_room_id").value = room_id;
+		alert("added")
+	}
+	function alert_show_when_data_added(){
+		alert("student added successfully");
+	}
+</script>
+
+</body>
+</html>
+
+
+
+
+
+

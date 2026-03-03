@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add Room</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: #f8fafc;
+            padding: 16px;
+            color: #0f172a;
+        }
+
+        .container {
+            max-width: 420px;
+            margin: auto;
+        }
+
+        /* Header */
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        /* Card */
+        .card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 14px;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: #334155;
+        }
+
+        input {
+            width: 100%;
+            padding: 11px 12px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            font-size: 15px;
+            margin-bottom: 18px;
+        }
+
+        input:focus {
+            border-color: #2563eb;
+            outline: none;
+        }
+
+        /* Beds with plus */
+        .bed-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bed-row input {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .plus {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1px solid #2563eb;
+            background: #ffffff;
+            color: #2563eb;
+            font-size: 22px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .plus:active {
+            background: #eff6ff;
+        }
+
+        /* Submit */
+        .submit-btn {
+            width: 100%;
+            margin-top: 22px;
+            padding: 12px;
+            background: #2563eb;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background: #1e40af;
+        }
+
+
+
+
+
+
+
+/* Section title */
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 26px 0 14px;
+}
+
+/* Room card */
+.room-card {
+    background: #ffffff;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+    overflow: hidden;
+}
+
+/* Room header */
+.room-header {
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    padding: 14px 16px;
+}
+
+.room-number {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* Beds list */
+.beds-list {
+    padding: 12px 14px;
+}
+
+/* Each bed row */
+.bed-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background: #f8fafc;
+    transition: background 0.2s ease;
+}
+
+.bed-item:hover {
+    background: #eef2ff;
+}
+
+.bed-item span {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Actions */
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.icon-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+/* Edit */
+.edit-btn {
+    background: #e0e7ff;
+    color: #2563eb;
+}
+
+.edit-btn:hover {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+/* Delete */
+.delete-btn {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.delete-btn:hover {
+    background: #dc2626;
+    color: #ffffff;
+}
+/* 🔻 Premium Glass Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 520px;
+    height: 70px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 05px;
+
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    z-index: 1000;
+    position: fixed;
+}
+
+/* Nav Items */
+.nav-item {
+    position: relative;
+    text-decoration: none;
+    color: #111;
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 0.3s ease;
+    z-index: 2;
+}
+
+/* Icons */
+.nav-item i {
+    font-size: 20px;
+    margin-bottom: 4px;
+    transition: 0.3s ease;
+}
+
+/* Hover */
+.nav-item:hover {
+    opacity: 0.6;
+}
+
+/* Active Style */
+.nav-item.active {
+    color: #000;
+}
+
+/* Animated Indicator */
+.nav-indicator {
+    position: absolute;
+    height: 45px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 20px;
+    transition: 0.4s ease;
+    left: 25%;
+    transform: translateX(-50%);
+}
+
+/* Prevent content hiding */
+.container {
+    padding-bottom: 120px;
+}
+
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+<!-- 🔻 Premium Glass Bottom Navigation -->
+<div class="bottom-nav">
+    <div class="nav-indicator"></div>
+
+    <a href="{% url 'home' %}" class="nav-item active">
+        <i class="fa fa-home"></i>
+        <span>Home</span>
+    </a>
+
+    <a href="{% url 'studentspage' %}" class="nav-item">
+        <i class="fa fa-users"></i>
+        <span>Students</span>
+    </a>
+</div>
+    <div class="header">
+        <h1>Add Room</h1>
+        <p>Create a room and generate beds automatically</p>
+    </div>
+
+    <div class="card">
+        <form method="post">
+            {% csrf_token %}
+
+            <label>Room Number</label>
+            <input type="text" name="room_number" placeholder="Eg: 101" required>
+
+            <label>Total Beds</label>
+            <div class="bed-row">
+                <input type="number" name="total_beds" id="beds" value="1" min="1" required>
+                <button type="button" class="plus" onclick="addBed()">+</button>
+            </div>
+
+            <button class="submit-btn" type="submit">Create Room</button>
+        </form>
+    </div>
+
+<div id="rooms_beds_container">
+    <p class="section-title">Rooms & Beds</p>
+
+    {% regroup bed_show by room.room_number as rooms %}
+
+    {% for room in rooms %}
+    <div class="room-card">
+        <div class="room-header">
+            <span class="room-number">Room {{ room.grouper }}</span>
+        </div>
+
+        <div class="beds-list">
+            {% for b in room.list %}
+            <div class="bed-item">
+                <span>Bed {{ b.bed_number }}</span>
+                <div class="actions">
+                                       <div class="icon-btn delete-btn">
+                        <a href="{% url 'delete_room' b.id %}"><i class="fa fa-trash"></i></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+</div>
+
+<script>
+    function addBed() {
+        const bedInput = document.getElementById("beds");
+        bedInput.value = parseInt(bedInput.value || 0) + 1;
+    }
+</script>
+
+</body>
+</html>
