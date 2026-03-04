@@ -210,6 +210,7 @@ def edit_show_paidamount(request, id):
         student.parent_phn_number = request.POST.get("parent_phn_number")
         student.address = request.POST.get("address")
         room_bed_stu = request.POST.get("room_bed")
+        student.advance_amount = request.POST.get("stu_adv")
         student.total_fee = request.POST.get("total_fee")
         if room_bed_stu.isdigit():
             
@@ -219,6 +220,7 @@ def edit_show_paidamount(request, id):
             student.save()
         else:
             student.room_bed=room_bed_stu
+            student.save()
 
         return redirect('edit_show_paidamount', id=student.id)
     payment_history = student_payment_add.objects.filter(student_id=id)
