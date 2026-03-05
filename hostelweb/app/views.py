@@ -127,6 +127,8 @@ def add_student(request):
                     hostel_username_id=request.user.id
 
         )
+            bedroom.is_occupied=True
+            bedroom.save()
         else:
             bedroom = None
             Student_details.objects.create(
