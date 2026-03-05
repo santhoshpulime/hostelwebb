@@ -220,8 +220,8 @@ def edit_show_paidamount(request, id):
             student.room_bed=bedroom.room.room_number+"-"+bedroom.bed_number
 
             student.save()
-            bed_show.is_occupied=True
-            bed_show.save()
+            bedroom.is_occupied=True
+            bedroom.save()
         else:
             student.room_bed=room_bed_stu
             student.save()
@@ -293,3 +293,4 @@ def accounts(request):
         'adv_total':adv_total,
         'grandtotal':total+adv_total,
         })
+
