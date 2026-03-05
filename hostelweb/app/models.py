@@ -24,6 +24,7 @@ class Bed(models.Model):
     bed_number = models.CharField(max_length=10,blank="True")
     is_occupied = models.BooleanField(default=False,blank="True")
     hostel_username_id =models.TextField(blank=True)
+    room_filled = models.TextField(blank=True)
 
    # def __str__(self):
     #    return f"{self.room.room_number} - Bed {self.bed_number}"
