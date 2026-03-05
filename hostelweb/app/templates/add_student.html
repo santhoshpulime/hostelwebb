@@ -293,6 +293,7 @@
 		{% for i in bed_show %}
 			<div class="bed-item">
 				<span>Room {{i.room.room_number}} – Bed {{i.bed_number}}</span>
+				<span>{{i.is_occupied}}</span>
 				<button onclick="add_room_bed('{{i.id}}')" id="add_room_btn">
 					<i class="fa fa-plus"></i>
 				</button>
