@@ -99,7 +99,7 @@ def delete_room(request,id):
 
 
 def add_student(request):
-    bed_show  = Bed.objects.all()
+    bed_show  = Bed.objects.filter(hostel_username_id=request.user.id)
 
 
     if request.method == "POST":
@@ -200,7 +200,7 @@ def amount_paid(request,id):
 
 ####show paid amount
 def edit_show_paidamount(request, id):
-    bed_show  = Bed.objects.all()
+    bed_show  = Bed.objects.filter(hostel_username_id=request.user.id)
 
     student = Student_details.objects.get(id=id)
     if request.method == "POST":
