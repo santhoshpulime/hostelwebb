@@ -280,9 +280,11 @@ def accounts(request):
             pass
     advance_payments = Student_details.objects.filter(hostel_username_id=request.user.id)
     adv_total = 0
+    total_fee_stu=0
     for a in advance_payments:
         try:
             adv_total+=int(a.advance_amount)
+            total_fee_stu+=int(a.total_fee)
         except:
             pass 
 
@@ -292,5 +294,5 @@ def accounts(request):
         'advance_payments':advance_payments,
         'adv_total':adv_total,
         'grandtotal':total+adv_total,
+        'total_fee_stu':total_fee_stu,
         })
-
