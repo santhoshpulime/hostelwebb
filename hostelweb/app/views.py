@@ -180,6 +180,9 @@ def studentspage(request):
 def delete_student(request,id):
     student_delete= get_object_or_404(Student_details,id=id)
     student_delete.delete()
+    student_payment_add_delete=student_payment_add.objects.filter(student_id=id)
+    for i in student_payment_add_delete:
+        student_payment_add_delete.delete()
     return redirect("studentspage")
 
 
