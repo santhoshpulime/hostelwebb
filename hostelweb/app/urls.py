@@ -20,5 +20,7 @@ path('admin/', admin.site.urls),
 	path('edit_show_paidamount/<int:id>/',views.edit_show_paidamount,name="edit_show_paidamount"),
   	path('logout/', views.user_logout, name='logout'),
   	  	path('accounts/', views.accounts, name='accounts'),
+	    path('index', views.index,name='index'),
+
 
 ]
