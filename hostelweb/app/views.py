@@ -338,20 +338,67 @@ import base64
 import numpy as np
 import cv2
 from django.http import JsonResponse
+prev_frame = None
 
 def upload_frame(request):
+    global prev_frame
+
     if request.method == "POST":
-        data = json.loads(request.body)
+        try:
+            data = json.loads(request.body)
 
-        image_data = data["image"].split(",")[1]
+            image_data = data["image"].split(",")[1]
 
-        img_bytes = base64.b64decode(image_data)
-        np_arr = np.frombuffer(img_bytes, np.uint8)
+            img_bytes = base64.b64decode(image_data)
+            np_arr = np.frombuffer(img_bytes, np.uint8)
 
-        frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+            frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
 
-        # 👉 For now just check it's working
-        print("Frame received:", frame.shape)
+            # resize for speed
+            frame = cv2.resize(frame, (320, 240))
 
+            # convert to grayscale
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            gray = cv2.GaussianBlur(gray, (21, 21), 0)
+
+            # first frame setup
+            if prev_frame is None:
+                prev_frame = gray
+                return JsonResponse({"status": "init"})
+
+            # 🔥 STEP 1: difference between frames
+            diff = cv2.absdiff(prev_frame, gray)
+
+            # 🔥 STEP 2: threshold (highlight movement)
+            thresh = cv2.threshold(diff, 25, 255, cv2.THRESH_BINARY)[1]
+
+            # remove noise
+            thresh = cv2.dilate(thresh, None, iterations=2)
+
+            # 🔥 STEP 3: find moving areas
+            contours, _ = cv2.findContours(
+                thresh.copy(),
+                cv2.RETR_EXTERNAL,
+                cv2.CHAIN_APPROX_SIMPLE
+            )
+
+            for c in contours:
+                if cv2.contourArea(c) < 500:
+                    continue
+
+                (x, y, w, h) = cv2.boundingRect(c)
+
+                # draw box on original frame
+                cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+
+            prev_frame = gray
+
+            print("Processed frame")
+
+            return JsonResponse({"status": "motion_detected"})
+
+        except Exception as e:
+            print("Error:", e)
+            return JsonResponse({"status": "error"})
         return JsonResponse({"status": "received"})
 
