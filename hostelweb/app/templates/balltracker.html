@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ball Tracker</title>
+</head>
+<body>
+
+<h2>Camera Feed</h2>
+
+<video id="video" width="400" autoplay></video>
+
+<script>
+const video = document.getElementById("video");
+
+// Ask permission + start camera
+navigator.mediaDevices.getUserMedia({ video: true })
+.then(stream => {
+    video.srcObject = stream;
+})
+.catch(err => {
+    alert("Camera access denied!");
+});
+</script>
+
+</body>
+</html>
