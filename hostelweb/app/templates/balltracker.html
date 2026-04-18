@@ -8,14 +8,17 @@
 <h2>Camera Feed</h2>
 
 <video id="video" width="400" autoplay></video>
+<canvas id="canvas" style="display:none;"></canvas>
 
 <script>
 const video = document.getElementById("video");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
 
-// Ask permission + start camera
+// Start camera (your existing code)
 navigator.mediaDevices.getUserMedia({
     video: {
-        facingMode: { ideal: "environment" }   // 🔥 back camera
+        facingMode: { ideal: "environment" }
     }
 })
 .then(stream => {
@@ -23,7 +26,30 @@ navigator.mediaDevices.getUserMedia({
 })
 .catch(err => {
     alert("Camera access denied or not supported!");
-});</script>
+});
+
+
+// 🔥 STEP 2: Capture frames
+function captureFrame() {
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    ctx.drawImage(video, 0, 0);
+
+    // this is the frame image
+    const imageData = canvas.toDataURL("image/jpeg");
+
+    console.log("Frame captured");
+
+    // keep capturing
+    requestAnimationFrame(captureFrame);
+}
+
+// start capturing after video loads
+video.addEventListener("loadeddata", () => {
+    captureFrame();
+});
+</script>
 
 </body>
 </html>
