@@ -332,3 +332,26 @@ def index(request):
     return render(request, 'balltracker.html')
 
 
+
+import json
+import base64
+import numpy as np
+import cv2
+from django.http import JsonResponse
+
+def upload_frame(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+
+        image_data = data["image"].split(",")[1]
+
+        img_bytes = base64.b64decode(image_data)
+        np_arr = np.frombuffer(img_bytes, np.uint8)
+
+        frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+
+        # 👉 For now just check it's working
+        print("Frame received:", frame.shape)
+
+        return JsonResponse({"status": "received"})
+
