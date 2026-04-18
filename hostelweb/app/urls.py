@@ -22,5 +22,6 @@ path('admin/', admin.site.urls),
   	  	path('accounts/', views.accounts, name='accounts'),
 	    path('index', views.index,name='index'),
 
+    path("upload_frame/", views.upload_frame),
 
 ]
