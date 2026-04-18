@@ -10,6 +10,21 @@ from .models import student_payment_add
 
 from .models import Room,Bed,Student_details,student_payment,student_payment_add
 from datetime import date
+
+
+import numpy as np
+import cv2
+import base64
+import json
+import time
+from django.shortcuts import render
+from django.http import JsonResponse
+
+import cv2
+import numpy as np
+from django.shortcuts import render
+from django.http import StreamingHttpResponse
+from .ai_model import predict_speed
 def home(request):
 
     if not request.user.is_authenticated:
@@ -299,3 +314,32 @@ def accounts(request):
         'grandtotal':total+adv_total,
         'total_fee_stu':total_fee_stu,
         })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###############ball tracking
+
+
+
+previous_center = None
+prev_time = None
+prev_gray = None
+speed_list = []
+
+def index(request):
+    return render(request, 'balltracker.html')
+
+
