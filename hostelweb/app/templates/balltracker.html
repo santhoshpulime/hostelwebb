@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ball Tracker</title>
+</head>
+<body>
+
+<h2>Camera Feed</h2>
+
+<video id="video" width="400" autoplay></video>
+<canvas id="canvas" style="display:none;"></canvas>
+
 <script>
 const video = document.getElementById("video");
 const canvas = document.getElementById("canvas");
@@ -44,3 +56,5 @@ video.addEventListener("loadeddata", () => {
     sendFrame();
 });
 </script>
+</body>
+</html>
