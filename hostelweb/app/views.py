@@ -20,11 +20,7 @@ import time
 from django.shortcuts import render
 from django.http import JsonResponse
 
-import cv2
-import numpy as np
-from django.shortcuts import render
-from django.http import StreamingHttpResponse
-from .ai_model import predict_speed
+
 def home(request):
 
     if not request.user.is_authenticated:
